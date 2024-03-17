@@ -1,0 +1,20 @@
+h1 {
+  font-weight: bold;
+}
+
+.output {
+  font-weight: bold;
+}
+
+#payment {
+  text-decoration: underline;
+}
+
+#graph {
+  border: solid black 1px;
+}
+
+th,
+td {
+  vertical-align: top;
+}
