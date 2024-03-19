@@ -59,3 +59,39 @@ function save(amount, apr, years, zipcode) {
     localStorage.loan_zipcode = zipcode;
   }
 }
+
+// восстанавливать заполненные поля
+
+window.onload = function () {
+  if (window.localStorage && localStorage.loan_amount) {
+    document.getElementById('amount').value = localStorage.loan_amount;
+    document.getElementById('apr').value = localStorage.loan_apr;
+    document.getElementById('years').value = localStorage.loan_years;
+    document.getElementById('zipcode').value = localStorage.loan_zipcode;
+  }
+};
+
+// график изменения остатка
+
+function chart(principal, interest, monthly, payments) {
+  const graph = document.getElementById('graph');
+  graph.width = graph.width;
+  if (arguments.length == 0 || !graph.getContext) return;
+  const g = graph.getContext('2d');
+  const width = graph.width,
+    height = graph.height;
+  function paymentToX(n) {
+    return (n * width) / payments;
+  }
+  function amountToY(a) {
+    return height - (a * height) / (monthly * payments * 1.05);
+  }
+  g.moveTo(paymentToX(0), amountToY(0));
+  g.lineTo(paymentToX(payments), amountToY(monthly * payments));
+  g.lineTo(paymentToX(payments), amountToY(0));
+  g.closePath();
+  g.fillStyle = '#f88';
+  g.fill();
+  g.font = 'bold 12px sans-serif';
+  g.fillText('Total Interest Payments', 20, 20);
+}
